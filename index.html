@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MAPS MAPS MAPS !</title>
+    
+    <!-- mapbox globe javascript -->
+    <script src='https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css' rel='stylesheet' />
+    
+    <!-- scrollama -->
+    <script src="https://unpkg.com/intersection-observer@0.12.0/intersection-observer.js"></script>
+    <script src="https://unpkg.com/scrollama"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Charter', 'Georgia', serif;
+            color: #121212;
+            background: #fafafa;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        #header {
+            padding: 80px 60px 60px;
+            margin-left: 50%;
+            max-width: 700px;
+        }
+
+        h1 {
+            font-family: 'Cheltenham', 'Georgia', serif;
+            font-size: clamp(2.5rem, 5vw, 3.5rem);
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        .byline {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .intro {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* 2-panel layout */
+        #map {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 50%;
+            height: 100vh;
+            z-index: 0;
+        }
+
+        /* map legend */
+        .legend {
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            font-size: 0.85rem;
+        }
+
+        .legend h4 {
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        /* written/story sections */
+        #story {
+            position: relative;
+            margin-left: 50%;
+            z-index: 5;
+        }
+
+        .step {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 0 60px;
+        }
+
+        .step-content {
+            background: #ffffff;
+            padding: 50px;
+            max-width: 600px;
+            border-left: 4px solid #121212;
+        }
+
+        .step-content h2 {
+            font-family: 'Cheltenham', 'Georgia', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .step-content p {
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: #333;
+            margin-bottom: 12px;
+        }
+
+        .step-content .stat {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #d32f2f;
+            margin: 20px 0;
+            line-height: 1;
+        }
+
+        .step-content .caption {
+            font-size: 0.85rem;
+            color: #666;
+            font-style: italic;
+            margin-top: 16px;
+        }
+
+        /* two-panel matching styling (step functions to match map and story) */
+        .step:first-child .step-content {
+            max-width: 600px;
+            background: #ffffff;
+            border-left: 4px solid #121212;
+        }
+
+        /* outro section */
+        #outro {
+            padding: 100px 60px;
+            margin-left: 50%;
+            max-width: 700px;
+        }
+
+        #outro h2 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        #outro p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #333;
+        }
+
+        /* media styling --> to handle switching mobile/web */
+        @media (max-width: 768px) {
+            /* Switch to overlay mode on mobile */
+            #header {
+                margin-left: 0;
+                padding: 80px 20px 60px;
+                text-align: center;
+            }
+
+            #map {
+                width: 100%;
+            }
+
+            #story {
+                margin-left: 0;
+            }
+
+            .step-content {
+                padding: 30px;
+                background: rgba(255, 255, 255, 0.95);
+                backdrop-filter: blur(10px);
+                box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            }
+
+            .step {
+                padding: 0 20px;
+            }
+
+            #outro {
+                margin-left: 0;
+                padding: 100px 20px;
+                text-align: center;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .legend {
+                bottom: 20px;
+                left: 20px;
+                padding: 15px;
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="header"></div>
+
+    <div id="map"></div>
+    <div class="legend" id="legend"></div>
+    
+    <div id="story"></div>
+
+    <div id="outro"></div>
+
+    <!-- Load your story configuration -->
+    <script src="story-config.js"></script>
+    
+    <!-- Load the application logic -->
+    <script src="app.js"></script>
+</body>
+</html>
