@@ -134,15 +134,36 @@ class ScrollyMap {
             .onStepEnter(response => {
                 const stepId = response.element.dataset.step;
                 const chapter = this.config.chapters.find(c => c.id === stepId);
-                
+
                 if (chapter && chapter.map) {
+                    const panelPadding = window.innerWidth >= 768
+                        ? { left: 680, right: 0, top: 0, bottom: 0 }
+                        : { left: 0, right: 0, top: 0, bottom: 0 };
+
                     this.map.flyTo({
                         center: chapter.map.center,
                         zoom: chapter.map.zoom,
                         pitch: chapter.map.pitch,
                         bearing: chapter.map.bearing,
                         duration: chapter.map.duration,
+                        padding: panelPadding,
                         essential: true
+                    });
+                }
+
+                // Show/hide layers defined in the chapter
+                if (chapter && chapter.showLayers) {
+                    chapter.showLayers.forEach(layerId => {
+                        if (this.map.getLayer(layerId)) {
+                            this.map.setLayoutProperty(layerId, 'visibility', 'visible');
+                        }
+                    });
+                }
+                if (chapter && chapter.hideLayers) {
+                    chapter.hideLayers.forEach(layerId => {
+                        if (this.map.getLayer(layerId)) {
+                            this.map.setLayoutProperty(layerId, 'visibility', 'none');
+                        }
                     });
                 }
 

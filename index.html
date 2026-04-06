@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MAPS MAPS MAPS !</title>
     
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Libre+Franklin:wght@400;600&display=swap" rel="stylesheet">
+
     <!-- mapbox globe javascript -->
     <script src='https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.js'></script>
     <link href='https://api.mapbox.com/mapbox-gl-js/v3.0.1/mapbox-gl.css' rel='stylesheet' />
@@ -31,8 +33,8 @@
         #header {
             position: relative;
             z-index: 5;
-            background: rgba(255, 255, 255, 0.5);
-            padding: 80px 60px 50px;
+            background: rgba(255, 255, 255, 0.15);
+            padding: 80px 60px 20px;
             max-width: 100%;
             text-align: center
         }
@@ -48,9 +50,9 @@
 
         .byline {
             font-size: 0.9rem;
-            color: #666;
+            font-weight: 400;
+            color: #000;
             margin-bottom: 30px;
-            text-transform: uppercase;
             letter-spacing: 0.05em;
         }
 
@@ -109,7 +111,7 @@
         }
 
         .step-content {
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(250, 250, 250, 0.95);
             backdrop-filter: blur(4px);
             padding: 50px;
             max-width: 600px;
@@ -145,50 +147,6 @@
             font-style: italic;
             margin-top: 16px;
         }
-        
-        .migration-embed {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            height: auto;
-            overflow: hidden;
-            margin: 0;
-        }
- 
-        .migration-embed iframe {
-            width: 100%;
-            height: 100%;
-            display: block;
-            border: none;
-        }
- 
-        #story .step:first-child {
-            margin-left: 0;
-            width: 100%;
-            min-height: 100vh;
-            display: flex;
-            align-items: flex-start;
-            padding: 0 5%;
-        }
-
-        #story .step:first-child .step-content {
-            border-left: none;
-            padding: 60px 0 0 0;
-            background: transparent;
-            max-width: 100%;
-            width: 100%;
-        }
-
-
-        #story .step:first-child .step-content p {
-            color: #333;
-            margin-bottom: 20px;
-        }
-
-        #story .step:first-child .step-content h2 {
-            color: #121212;
-            margin-bottom: 12px;
-        }
-
         /* outro section */
         #outro {
             padding: 100px 60px;
@@ -258,66 +216,8 @@
         }
     </style>
 </head>
-
-<!-- Lightbox overlay — lives in index.html so it can cover the full page -->
-<div id="migration-lightbox" style="
-  display:none;
-  position:fixed;
-  inset:0;
-  background:rgba(0,0,0,.88);
-  z-index:9999;
-  align-items:center;
-  justify-content:center;
-  cursor:zoom-out;
-">
-  <button onclick="closeMigrationLightbox()" style="
-    position:fixed;
-    top:20px;
-    right:28px;
-    background:none;
-    border:none;
-    color:white;
-    font-size:36px;
-    cursor:pointer;
-    line-height:1;
-    opacity:.7;
-  ">✕</button>
-  <img id="migration-lightbox-img" src="" style="
-    max-width:92vw;
-    max-height:90vh;
-    border-radius:4px;
-    box-shadow:0 8px 60px rgba(0,0,0,.9);
-    cursor:default;
-  ">
-</div>
- 
-<script>
-// Called by the iframe when user clicks the GIF
-function openMigrationLightbox(src) {
-  const lb = document.getElementById('migration-lightbox');
-  document.getElementById('migration-lightbox-img').src = src;
-  lb.style.display = 'flex';
-  document.body.style.overflow = 'hidden';
-}
- 
-function closeMigrationLightbox() {
-  document.getElementById('migration-lightbox').style.display = 'none';
-  document.body.style.overflow = '';
-}
- 
-// Close on backdrop click
-document.getElementById('migration-lightbox').addEventListener('click', function(e) {
-  if (e.target === this) closeMigrationLightbox();
-});
- 
-// Close on Escape key
-document.addEventListener('keydown', function(e) {
-  if (e.key === 'Escape') closeMigrationLightbox();
-});
-</script>
-
-
 <body>
+
     <div id="header"></div>
 
     <div id="map"></div>
