@@ -4,7 +4,7 @@
 const storyConfig = {
     // hed/dek
     header: {
-        title: 'They Drew the <a href="migration-corridors.html" style="color:inherit;text-decoration:underline;text-underline-offset:4px;">Lines</a>. Now They Guard Them.',
+        title: 'They Drew the <a href="migration-map.html" style="color:inherit;text-decoration:underline;text-underline-offset:4px;">Lines</a>. Now They Guard Them.',
         byline: "By JANAVI KUMAR · Feb 13, 2026",
         intro: ["Empires remade entire nations, reshaping lives, borders, and languages. Today, those same ties often pull refugees towards their former colonizers. <br>But the colonizers are closing their doors."]
     },
